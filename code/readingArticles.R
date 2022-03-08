@@ -2,7 +2,7 @@
 # Objective: TODO
 # Author:    Edoardo Costantini
 # Created:   2022-03-04
-# Modified:  2022-03-04
+# Modified:  2022-03-07
 
   rm(list = ls())
 
@@ -110,7 +110,7 @@
                         tag_im = "", # actually does some form of imputation
                         tag_mi = "", # performs mi
                         tag_nm = "", # mentions number of imputation
-                        tag_ax = "", # describes auxiliary variables
+                        tag_pr = "", # describes which predictors are used in the imputation models
                         notes = "")
 
   # Give meaningful rownames to make it easier for coding
@@ -120,28 +120,28 @@
   imp_xls <- imp_xls[order(imp_xls$fileName), ]
 
   # Manually code the text data
-  imp_xls["690053.html", c("tag_im", "tag_mi", "tag_nm", "tag_ax")] <- c(0, 0, 0, 0)
-  imp_xls["691261.html", c("tag_im", "tag_mi", "tag_nm", "tag_ax")] <- c(1, 1, 1, 0)
-  imp_xls["691327.html", c("tag_im", "tag_mi", "tag_nm", "tag_ax")] <- c(1, 0, 0, 0)
-  imp_xls["692350.html", c("tag_im", "tag_mi", "tag_nm", "tag_ax")] <- c(0, 0, 0, 0)
-  imp_xls["693703.html", c("tag_im", "tag_mi", "tag_nm", "tag_ax")] <- c(1, 1, 1, 0)
-  imp_xls["696209.html", c("tag_im", "tag_mi", "tag_nm", "tag_ax")] <- c(0, 0, 0, 0)
-  imp_xls["697111.html", c("tag_im", "tag_mi", "tag_nm", "tag_ax")] <- c(1, 1, 1, 0)
-  imp_xls["697498.html", c("tag_im", "tag_mi", "tag_nm", "tag_ax")] <- c(1, 0, 0, 0)
-  imp_xls["697528.html", c("tag_im", "tag_mi", "tag_nm", "tag_ax")] <- c(1, 0, 0, 0)
-  imp_xls["698481.html", c("tag_im", "tag_mi", "tag_nm", "tag_ax")] <- c(1, 1, 1, 1)
-  imp_xls["699652.html", c("tag_im", "tag_mi", "tag_nm", "tag_ax")] <- c(1, 1, 1, 0)
-  imp_xls["702008.html", c("tag_im", "tag_mi", "tag_nm", "tag_ax")] <- c(1, 1, 1, 0)
-  imp_xls["702278.html", c("tag_im", "tag_mi", "tag_nm", "tag_ax")] <- c(1, 1, 1, 0)
-  imp_xls["703044.html", c("tag_im", "tag_mi", "tag_nm", "tag_ax")] <- c(1, 1, 1, 1)
-  imp_xls["707985.html", c("tag_im", "tag_mi", "tag_nm", "tag_ax")] <- c(1, 1, 1, 1)
-  imp_xls["709778.html", c("tag_im", "tag_mi", "tag_nm", "tag_ax")] <- c(0, 0, 0, 0)
-  imp_xls["711231.html", c("tag_im", "tag_mi", "tag_nm", "tag_ax")] <- c(1, 1, 1, 0)
-  imp_xls["712406.html", c("tag_im", "tag_mi", "tag_nm", "tag_ax")] <- c(0, 0, 0, 0)
-  imp_xls["712972.html", c("tag_im", "tag_mi", "tag_nm", "tag_ax")] <- c(1, 1, 1, 0)
-  imp_xls["714062.html", c("tag_im", "tag_mi", "tag_nm", "tag_ax")] <- c(1, 1, 1, 0)
-  imp_xls["717448.html", c("tag_im", "tag_mi", "tag_nm", "tag_ax")] <- c(1, 1, 0, 0)
-  imp_xls["718451.html", c("tag_im", "tag_mi", "tag_nm", "tag_ax")] <- c(1, 0, 0, 0)
+  imp_xls["690053.html", c("tag_im", "tag_mi", "tag_nm", "tag_pr")] <- c(0, 0, 0, 0)
+  imp_xls["691261.html", c("tag_im", "tag_mi", "tag_nm", "tag_pr")] <- c(1, 1, 1, 0)
+  imp_xls["691327.html", c("tag_im", "tag_mi", "tag_nm", "tag_pr")] <- c(1, 0, 0, 0)
+  imp_xls["692350.html", c("tag_im", "tag_mi", "tag_nm", "tag_pr")] <- c(0, 0, 0, 0)
+  imp_xls["693703.html", c("tag_im", "tag_mi", "tag_nm", "tag_pr")] <- c(1, 1, 1, 0)
+  imp_xls["696209.html", c("tag_im", "tag_mi", "tag_nm", "tag_pr")] <- c(0, 0, 0, 0)
+  imp_xls["697111.html", c("tag_im", "tag_mi", "tag_nm", "tag_pr")] <- c(1, 1, 1, 0)
+  imp_xls["697498.html", c("tag_im", "tag_mi", "tag_nm", "tag_pr")] <- c(1, 0, 0, 0)
+  imp_xls["697528.html", c("tag_im", "tag_mi", "tag_nm", "tag_pr")] <- c(1, 0, 0, 0)
+  imp_xls["698481.html", c("tag_im", "tag_mi", "tag_nm", "tag_pr")] <- c(1, 1, 1, 1)
+  imp_xls["699652.html", c("tag_im", "tag_mi", "tag_nm", "tag_pr")] <- c(1, 1, 1, 0)
+  imp_xls["702008.html", c("tag_im", "tag_mi", "tag_nm", "tag_pr")] <- c(1, 1, 1, 0)
+  imp_xls["702278.html", c("tag_im", "tag_mi", "tag_nm", "tag_pr")] <- c(1, 1, 1, 0)
+  imp_xls["703044.html", c("tag_im", "tag_mi", "tag_nm", "tag_pr")] <- c(1, 1, 1, 1)
+  imp_xls["707985.html", c("tag_im", "tag_mi", "tag_nm", "tag_pr")] <- c(1, 1, 1, 1)
+  imp_xls["709778.html", c("tag_im", "tag_mi", "tag_nm", "tag_pr")] <- c(0, 0, 0, 0)
+  imp_xls["711231.html", c("tag_im", "tag_mi", "tag_nm", "tag_pr")] <- c(1, 1, 1, 0)
+  imp_xls["712406.html", c("tag_im", "tag_mi", "tag_nm", "tag_pr")] <- c(0, 0, 0, 0)
+  imp_xls["712972.html", c("tag_im", "tag_mi", "tag_nm", "tag_pr")] <- c(1, 1, 1, 0)
+  imp_xls["714062.html", c("tag_im", "tag_mi", "tag_nm", "tag_pr")] <- c(1, 1, 1, 0)
+  imp_xls["717448.html", c("tag_im", "tag_mi", "tag_nm", "tag_pr")] <- c(1, 1, 0, 0)
+  imp_xls["718451.html", c("tag_im", "tag_mi", "tag_nm", "tag_pr")] <- c(1, 0, 0, 0)
 
   # Draw conclusions
   # Papers doing actual imputation
@@ -154,7 +154,7 @@
   sum(imp_xls$tag_nm == 1)
 
   # Papers descirbing which predictors are included in the imputation model
-  sum(imp_xls$tag_ax == 1)
+  sum(imp_xls$tag_pr == 1)
 
   # Add paragraphs for excel sheet
   imp_xls$paragraphs <- fullParagraphs
