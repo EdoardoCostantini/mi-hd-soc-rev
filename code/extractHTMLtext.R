@@ -2,31 +2,31 @@
 # Objective: TODO
 # Author:    Edoardo Costantini
 # Created:   2022-03-04
-# Modified:  2022-03-04
+# Modified:  2022-03-07
 
-extractHTMLtext <- function(html_folder) {
+extractHTMLtext <- function(html_file, first_stop, last_stop, ...) {
   # Internals -------------------------------------------------------------
 
-  # html_folder = "../input/html/689268.html"
+    # html_file = "../input/html/689268.html"
+    # first_stop = "More"
+    # last_stop = "References"
 
   # Body ------------------------------------------------------------------
   # Source: https://www.r-bloggers.com/2011/10/reading-html-pages-in-r-for-text-processing/
     # Read and parse HTML file
-    doc.html <- htmlTreeParse(html_folder, useInternal = TRUE)
+    doc_html <- textreadr::read_html(html_file, ...)
 
-    # Extract all the paragraphs (HTML tag is p, starting at the root of the document)
-    doc.text <- xpathApply(doc.html, '//p', xmlValue)
+    # Get rid of part of the article until the first_stop
+    first_stop_loc <- which(doc_html == first_stop)[sum(doc_html == first_stop)]
+    doc_html <- doc_html[(first_stop_loc+1):length(doc_html)]
 
-    # Unlist flattens the list to create a character vector.
-    doc.text <- unlist(doc.text)
+    # Get rid of part of the article after the last_stop
+    last_stop_loc <- which(doc_html == last_stop)[1]
+    doc_html <- doc_html[1:(last_stop_loc-1)]
 
-    # Replace all \n by spaces
-    doc.text <- gsub('\\n', ' ', doc.text)
-
-    # Join all the elements of the character vector into a single
-    # character string, separated by spaces
-    doc.text <- paste(doc.text, collapse = ' ')
-
+    # Collapse into a single text
+    doc_text <- paste0(doc_html, collapse = " ")
+doc_text
     # Return
-    return(doc.text)
+    return(doc_text)
 }
