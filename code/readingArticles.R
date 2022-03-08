@@ -5,6 +5,8 @@
 # Modified:  2022-03-07
 
   rm(list = ls())
+  source("extractHTMLtext.R")
+  source("extractPhrases.R")
 
  # Load packages
   library(XML)
@@ -67,6 +69,7 @@
 
   # Run extraction
   NA_df <- extracPhrases(toks[pp_selected], NA_phrases, window = 20)
+  length(unique(NA_df$docname))
   length(unique(NA_df$docname))/length(pp_selected) * 100
 
 # Mentions of imputation -------------------------------------------------------
@@ -76,6 +79,7 @@
                    "multiple imputation*")
 
   imp_df <- extracPhrases(toks[pp_selected], imp_phrases, window = 50)
+  length(unique(imp_df$docname))
   length(unique(imp_df$docname))/length(unique(NA_df$docname)) * 100
 
   # Identify original papers filenames
