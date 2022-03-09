@@ -2,7 +2,7 @@
 # Objective: TODO
 # Author:    Edoardo Costantini
 # Created:   2022-03-04
-# Modified:  2022-03-07
+# Modified:  2022-03-09
 
   rm(list = ls())
   source("extractHTMLtext.R")
@@ -17,20 +17,36 @@
 
   # Define the location of the pdfs
   path_AJS <- "../input/ALS-2017-2021/"
+  path_ASR <- "../input/ASR"
+    path_ASR_internal <- list.dirs(path_ASR, recursive = FALSE)
+  files_ASR <- sapply(path_ASR_internal, function (x){
+    paste0(x, "/", list.files(x))
+  })
+
+  # List of files for the ASR journal
+  files_ASR <- unlist(files_ASR)
 
   # Find what htmls you have in the input folder
-  files <- list.files(path = path_AJS,
+  files_AJS <- list.files(path = path_AJS,
                       pattern = "html$")
 
   # Load the texts in your sessions by using extractHTMLtext
-  articles <- lapply(paste0(path_AJS, files), extractHTMLtext,
+  articles <- lapply(paste0(path_AJS, files_AJS), extractHTMLtext,
                      first_stop = "More",
                      last_stop = "References",
                      encoding = "UTF-8"
   )
 
+  # Load ASR htmls
+  articles <- lapply(files_ASR,
+                     extractHTMLtext,
+                     first_stop = "Article Information",
+                     last_stop = "References",
+                     encoding = "UTF-8"
+  )
+
   # Give names
-  names(articles) <- files
+  names(articles) <- files_AJS
 
   # Create a corpus
   corp <- tm::Corpus(VectorSource(articles))
@@ -49,8 +65,8 @@
                    "pvalue",
                    "p-value"
   )
-  suv_df <- extracPhrases(toks, suv_phrases, window = 20)
-  sta_df <- extracPhrases(toks, sta_phrases, window = 20)
+  suv_df <- extracPhrases(toks, suv_phrases, window = 3)
+  sta_df <- extracPhrases(toks, sta_phrases, window = 3)
 
   # Papers that mention surveys and do inference
   pp_index <- unique(suv_df$docname) %in% unique(sta_df$docname)
@@ -83,9 +99,12 @@
   length(unique(imp_df$docname))/length(unique(NA_df$docname)) * 100
 
   # Identify original papers filenames
-  mi_papers <- files[as.numeric(gsub("text",
-                                     "",
-                                     unique(imp_df$docname)))]
+  mi_papers <- files_AJS[as.numeric(gsub("text",
+                                         "",
+                                         unique(imp_df$docname)))]
+  mi_papers <- files_ASR[as.numeric(gsub("text",
+                                         "",
+                                         unique(imp_df$docname)))]
 
   # Make the object a data.frame
   imp_xls <- as.data.frame(imp_df)

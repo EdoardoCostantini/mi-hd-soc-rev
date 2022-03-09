@@ -21,12 +21,12 @@ extractHTMLtext <- function(html_file, first_stop, last_stop, ...) {
     doc_html <- doc_html[(first_stop_loc+1):length(doc_html)]
 
     # Get rid of part of the article after the last_stop
-    last_stop_loc <- which(doc_html == last_stop)[1]
+    last_stop_loc <- tail(which(doc_html == last_stop), 1)
     doc_html <- doc_html[1:(last_stop_loc-1)]
 
     # Collapse into a single text
     doc_text <- paste0(doc_html, collapse = " ")
-doc_text
+
     # Return
     return(doc_text)
 }
