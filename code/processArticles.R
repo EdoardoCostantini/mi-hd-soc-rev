@@ -2,7 +2,7 @@
 # Objective: Function to precess articles
 # Author:    Edoardo Costantini
 # Created:   2022-03-09
-# Modified:  2022-03-09
+# Modified:  2022-03-10
 
 processArticles <- function(file_names, file_paths,
                             first_stop, last_stop,
@@ -18,17 +18,6 @@ processArticles <- function(file_names, file_paths,
   # par_length = 5 # number of words to extract for context
 
   # Body ------------------------------------------------------------------
-
-  # Check internal directories
-  path_internal <- list.dirs(file_paths, recursive = FALSE)
-  if(length(path_internal) != 0){
-    files_ASR <- sapply(path_internal, function (x){
-      paste0(x, "/", list.files(x))
-    })
-
-    # List of files for the ASR journal
-    files_ASR <- unlist(files_ASR)
-  }
 
   # Load text of files
   articles <- lapply(paste0(file_paths, file_names),
@@ -127,7 +116,7 @@ processArticles <- function(file_names, file_paths,
   # Order by file name
   imp_xls <- imp_xls[order(mi_papers), ]
 
-  # Output
+  # Output ---------------------------------------------------------------------
   return(
     list(coding = imp_xls,
          n_papers = length(pp_selected),

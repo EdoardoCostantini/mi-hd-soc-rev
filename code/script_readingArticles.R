@@ -2,7 +2,7 @@
 # Objective: Coding artciels from different journals
 # Author:    Edoardo Costantini
 # Created:   2022-03-04
-# Modified:  2022-03-09
+# Modified:  2022-03-10
 
   rm(list = ls())
   source("extractHTMLtext.R")
@@ -22,7 +22,7 @@
 
   # Find what htmls you have in the input folder
   files_AJS <- list.files(path = path_AJS,
-                      pattern = "html$")
+                          pattern = "html$")
   files_ASR <- list.files(path = path_ASR,
                           pattern = "html$")
 
@@ -64,6 +64,7 @@
                  "tag_pr") # Were the predictors for the imputation models described? 0 = no, 1 = yes
 
   # > Manually code AJS papers -------------------------------------------------
+
   AJS$coding["690053.html", code_cols] <- c(0, 0, 0, 0)
   AJS$coding["691261.html", code_cols] <- c(1, 1, 1, 0)
   AJS$coding["691327.html", code_cols] <- c(1, 0, 0, 0)
@@ -111,6 +112,7 @@
   write_xlsx(AJS$coding,"../output/papersImputing.xlsx")
 
   # > Manually code ASR papers -------------------------------------------------
+
   ASR$coding["0003122416684777.html" , code_cols] <- c(1, 1, 1, 0)
   ASR$coding["0003122416686521.html" , code_cols] <- c(1, 1, 0, 0)
   ASR$coding["0003122417691952.html" , code_cols] <- c(0, 0, 0, 0)
