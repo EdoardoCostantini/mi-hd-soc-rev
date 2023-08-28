@@ -2,7 +2,7 @@
 # Objective: Function to precess articles
 # Author:    Edoardo Costantini
 # Created:   2022-03-09
-# Modified:  2022-03-10
+# Modified:  2023-08-28
 
 processArticles <- function(file_names, file_paths,
                             first_stop, last_stop,
@@ -32,24 +32,6 @@ processArticles <- function(file_names, file_paths,
 
   # Create a corpus
   corp <- tm::Corpus(VectorSource(articles))
-
-  # # Read the word vector RDS file from your computer
-  # wv <- readRDS("../input/rds/ft.cc.en.300D.2M.Rds")
-  #
-  # # Create the Document Term Matrix for this corpus
-  # dtm <- DocumentTermMatrix(corp)
-  #
-  # # Compute the cosine distance between survey and all other words in wv
-  # cosSim_survey <- text2vec::sim2(x = wv,
-  #                                 y = wv["survey", , drop = FALSE],
-  #                                 method = "cosine")
-  # head(sort(cosSim_survey[, 1], decreasing = TRUE), 50)
-  #
-  # # Define a vector of anchors
-  # anchors <- c("survey", "poll", "uestionnaire")
-  #
-  # # Compute the CDM for all of them
-  # closeness_anchors <- CMDist(dtm = dtm, cw = anchors, wv = wv)
 
   # Create quanteda tokens
   q_corp <- quanteda::corpus(corp)
