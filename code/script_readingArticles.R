@@ -2,7 +2,7 @@
 # Objective: Coding artciels from different journals
 # Author:    Edoardo Costantini
 # Created:   2022-03-04
-# Modified:  2022-03-10
+# Modified:  2023-08-28
 
   rm(list = ls())
   source("extractHTMLtext.R")
@@ -18,7 +18,7 @@
 # Prepare for text mining analysis ---------------------------------------------
 
   # Define the location of the pdfs
-  path_AJS <- "../input/ALS-2017-2021/"
+  path_AJS <- "../input/AJS-2017-2021/"
   path_ASR <- "../input/ASR-2017-2021/"
 
   # Find what htmls you have in the input folder
