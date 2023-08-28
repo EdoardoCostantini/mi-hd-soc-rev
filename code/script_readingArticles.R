@@ -13,6 +13,7 @@
   library(XML)
   library(tm)
   library(writexl)
+  library(text2map)
 
 # Prepare for text mining analysis ---------------------------------------------
 
